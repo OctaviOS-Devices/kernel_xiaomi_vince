@@ -94,8 +94,8 @@ function build_kernel() {
 function make_flashable() {
     make -C $ZIP_DIR clean &>/dev/null
     cp $KERNEL_IMG $ZIP_DIR
-    cp -rf $(find $OUT_DIR -name "*.ko" &>/dev/null) $ZIP_DIR/modules/system/lib/modules &>/dev/null
-    if [ -a $ZIP_DIR/modules/system/lib/modules/*.ko ]; then
+    cp -rf $(find $OUT_DIR -name "*.ko") $ZIP_DIR/modules/system/lib/modules &>/dev/null
+    if [[ $(find $ZIP_DIR/modules/system/lib/modules -name *.ko) ]]; then
 	sed -i "s/do.modules=0/do.modules=1/g" $ZIP_DIR/anykernel.sh
     else
 	sed -i "s/do.modules=1/do.modules=0/g" $ZIP_DIR/anykernel.sh
